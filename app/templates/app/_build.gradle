@@ -24,6 +24,7 @@ android {
     defaultConfig {
         minSdkVersion <%= androidMinSdkVersion %>
         targetSdkVersion <%= androidTargetSdkVersion %>
+        multiDexEnabled true
     }
     productFlavors {
         env_test {
