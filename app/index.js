@@ -39,7 +39,7 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the rad ' + chalk.red('Android Square Stack') + ' generator!'
+      'Welcome to the rad ' + chalk.red('Android Starter') + ' generator!'
     ));
 
     var prompts = [{
