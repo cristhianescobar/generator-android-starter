@@ -1,0 +1,27 @@
+<resources>
+
+  <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
+    <item name="android:colorPrimary">@color/primary</item>
+    <item name="android:colorPrimaryDark">@color/primary_dark</item>
+    <item name="android:colorAccent">@color/accent</item>
+
+    <!-- The rest of your attributes -->
+    <item name="android:windowBackground">@color/window_background</item>
+  </style>
+
+  <!-- App Toolbar -->
+
+  <style name="AppTheme.ActionBarStyle" parent="android:ThemeOverlay.Material.ActionBar">
+    <item name="android:background">@color/action_bar_background</item>
+  </style>
+
+  <!-- Buttons -->
+
+  <style name="AppTheme.Button.Flat" parent="android:Widget.Material.Button.Borderless">
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:textColor">@color/flat_button_text</item>
+    <item name="android:textSize">24sp</item>
+  </style>
+
+</resources>

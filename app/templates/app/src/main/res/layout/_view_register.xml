@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<<%= appPackage %>.screen.register.RegisterView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                      android:layout_width="match_parent"
+                                                      android:layout_height="match_parent">
+
+  <LinearLayout
+    android:id="@+id/registration_form"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
+
+    <TextView
+      style="@style/Base.TextAppearance.AppCompat.Medium"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="25dp"
+      android:text="@string/register_instruction_text"/>
+
+    <EditText
+      android:id="@+id/name_field"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/field_background"
+      android:padding="25dp"
+      android:inputType="textPersonName|textCapWords"
+      android:hint="@string/hint_name"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/window_background"/>
+
+    <EditText
+      android:id="@+id/email_field"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/field_background"
+      android:padding="25dp"
+      android:inputType="textEmailAddress"
+      android:hint="@string/hint_email_address"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/window_background"/>
+
+    <EditText
+      android:id="@+id/password_field"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/field_background"
+      android:padding="25dp"
+      android:inputType="textPassword"
+      android:hint="@string/hint_password"
+      android:imeOptions="actionDone"/>
+  </LinearLayout>
+
+  <Button
+    style="@style/AppTheme.Button.Flat"
+    android:id="@+id/register_button"
+    android:layout_below="@id/registration_form"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="25dp"
+    android:layout_marginEnd="25dp"
+    android:text="@string/button_register_text"/>
+
+</<%= appPackage %>.screen.register.RegisterView>

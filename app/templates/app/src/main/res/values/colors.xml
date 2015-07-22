@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="white" type="color">#FFFFFF</item>
+  <item name="light_gray" type="color">#BABABA</item>
+  <item name="dark_gray" type="color">#504F51</item>
+  <item name="link_blue" type="color">#1D599E</item>
+
+  <item name="primary" type="color">#FF5722</item>
+  <item name="primary_light" type="color">#FFAB91</item>
+  <item name="primary_dark" type="color">#BF360C</item>
+
+  <item name="accent" type="color">#03A9F4</item>
+  <item name="accent_light" type="color">#81D4FA</item>
+  <item name="accent_dark" type="color">#0288D1</item>
+
+  <item name="window_background" type="color">#E5E5E2</item>
+  <item name="action_bar_background" type="color">@color/white</item>
+  <item name="field_background" type="color">@color/white</item>
+  <item name="flat_button_text" type="color">#1D599E</item>
+</resources>

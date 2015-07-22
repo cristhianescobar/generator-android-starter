@@ -1,0 +1,44 @@
+{
+  "name": "generator-android-starter",
+  "version": "0.1.0",
+  "description": "Yeoman android starter essentials",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "cristhianescobar/generator-android-starter",
+  "author": {
+    "name": "Cristhian Escobar",
+    "email": "escobarcristhian18@gmail.com",
+    "url": "https://github.com/cristhianescobar"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "android",
+    "square",
+    "dagger",
+    "flow",
+    "mortar",
+    "retrofit",
+    "otto",
+    "rxandroid"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.18.0",
+    "chalk": "^0.5.0",
+    "yosay": "^0.3.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  }
+}
