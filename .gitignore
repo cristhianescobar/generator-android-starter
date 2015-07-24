@@ -2,3 +2,5 @@
 *.iml
 .idea/
 node_modules/
+app/templates/build/
+app/templates/local.properties
