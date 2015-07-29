@@ -142,6 +142,7 @@ dependencies {
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.squareup.flow:flow:0.8'
     compile 'com.squareup.mortar:mortar:0.16'
+    compile 'com.jakewharton.timber:timber:3.1.0'
     compile 'org.hibernate:hibernate-validator:4.3.2.Final'
     compile 'com.mixpanel.android:mixpanel-android:4.3.1@aar'
     compile 'com.jakewharton:butterknife:5.1.2'
