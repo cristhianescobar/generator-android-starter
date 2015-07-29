@@ -5,6 +5,7 @@ import <%= appPackage %>.BuildConfig;
 import dagger.ObjectGraph;
 import mortar.Mortar;
 import mortar.MortarScope;
+import android.support.multidex.MultiDex;
 import <%= appPackage %>.util.logging.Logger;
 
 public class Application extends android.app.Application {
