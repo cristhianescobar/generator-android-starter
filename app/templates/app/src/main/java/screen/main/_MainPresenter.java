@@ -8,17 +8,16 @@ import com.squareup.otto.Bus;
 import android.os.Bundle;
 import flow.Parcer;
 import mortar.Blueprint;
+import timber.log.Timber;
 import <%= appPackage %>.SharedPreferencesKeys;
 import <%= appPackage %>.model.User;
 import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
 import <%= appPackage %>.screen.home.HomeScreen;
 import <%= appPackage %>.screen.splash.SplashScreen;
 import <%= appPackage %>.util.flow.FlowOwner;
-import <%= appPackage %>.util.logging.Logger;
 
 @Singleton
 public class MainPresenter extends FlowOwner<Blueprint, MainView> {
-	private static final Logger LOG = Logger.getLogger(MainPresenter.class);
 
 	private final JsonSharedPreferencesRepository sharedPreferences;
 	private final Bus bus;
@@ -31,14 +30,14 @@ public class MainPresenter extends FlowOwner<Blueprint, MainView> {
 	}
 
 	@Override public void onLoad(Bundle savedInstanceState) {
-		LOG.debug("Registering with otto to receive bus events");
+		Timber.d("Registering with otto to receive bus events");
 		bus.register(this);
 
 		super.onLoad(savedInstanceState);
 	}
 
 	@Override public void dropView(MainView view) {
-		LOG.debug("Unregistering with otto");
+		Timber.d("Unregistering with otto");
 		bus.unregister(this);
 
 		super.dropView(view);
@@ -49,7 +48,7 @@ public class MainPresenter extends FlowOwner<Blueprint, MainView> {
 		if (userAccountExists()) {
 			return new HomeScreen();
 		} else {
-			LOG.warn("No user account found, redirecting to splash screen");
+			Timber.w("No user account found, redirecting to splash screen");
 			return new SplashScreen();
 		}
 	}

@@ -10,14 +10,12 @@ import org.json.JSONObject;
 import com.atomicleopard.expressive.Expressive;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
-import <%= appPackage %>.util.logging.Logger;
+import timber.log.Timber;
 
 /**
  * Track application events via Mixpanel
  */
 public class MixpanelEventTracker implements EventTracker {
-
-	private static final Logger LOG = Logger.getLogger(MixpanelEventTracker.class);
 
 	private final MixpanelAPI mixpanel;
 
@@ -76,6 +74,6 @@ public class MixpanelEventTracker implements EventTracker {
 		String eventName = String.format(format, formatArgs);
 		mixpanel.track(eventName, new JSONObject(properties));
 
-		LOG.info("Tracked event `%s` with properties: %s", eventName, properties);
+		Timber.i("Tracked event `%s` with properties: %s", eventName, properties);
 	}
 }

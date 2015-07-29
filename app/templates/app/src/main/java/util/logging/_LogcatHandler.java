@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-
+import timber.log.Timber;
 import android.util.Log;
 
 /**
@@ -48,9 +48,24 @@ public class LogcatHandler extends Handler {
 
 		try {
 			String message = getFormatter().format(record);
-			Log.println(level, record.getLoggerName(), message);
+			switch(level) {
+				case Log.ERROR:
+					Timber.e(message);
+					break;
+				case Log.WARN:
+					Timber.w(message);
+					break;
+				case Log.INFO:
+					Timber.i(message);
+					break;
+				case Log.DEBUG:
+					Timber.d(message);
+					break;
+				default:
+					break;
+			}
 		} catch (RuntimeException e) {
-			Log.e("AndroidHandler", "Error logging message.", e);
+			Timber.e("AndroidHandler", "Error logging message.", e);
 		}
 	}
 

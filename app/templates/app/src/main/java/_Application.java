@@ -5,10 +5,11 @@ import <%= appPackage %>.BuildConfig;
 import dagger.ObjectGraph;
 import mortar.Mortar;
 import mortar.MortarScope;
-import <%= appPackage %>.util.logging.Logger;
+import timber.log.Timber;
+import android.support.multidex.MultiDex;
+import <%= appPackage %>.util.logging.CrashReportingTree;
 
 public class Application extends android.app.Application {
-	private static final Logger LOG = Logger.getLogger(Application.class);
 
 	protected MortarScope rootScope;
 
@@ -17,13 +18,20 @@ public class Application extends android.app.Application {
 		super.onCreate();
 		MultiDex.install(this);
 
-		LOG.info("Starting application");
+		Timber.i("Starting application");
+		
+		if (BuildConfig.DEBUG) {
+			Timber.plant(new Timber.DebugTree());
+		} else {
+			// TODO Crashlytics.start(this);
+			Timber.plant(new CrashReportingTree());
+		}
 
-		LOG.debug("Initialising application object graph...");
+		Timber.d("Initialising application object graph...");
 		ObjectGraph objectGraph = ObjectGraph.create(new ApplicationModule(this));
 
 		// Eagerly validate development builds (too slow for production).
-		LOG.debug("Creating root Mortar scope...");
+		Timber.d("Creating root Mortar scope...");
 		rootScope = Mortar.createRootScope(BuildConfig.DEBUG, objectGraph);
 	}
 

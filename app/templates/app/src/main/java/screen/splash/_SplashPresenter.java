@@ -4,16 +4,15 @@ import javax.inject.Inject;
 
 import android.os.Bundle;
 import flow.Flow;
+import timber.log.Timber;
+
 import <%= appPackage %>.actionbar.ActionBarConfig;
 import <%= appPackage %>.actionbar.ActionBarOwner;
 import <%= appPackage %>.screen.login.LoginScreen;
 import <%= appPackage %>.screen.register.RegisterScreen;
-import <%= appPackage %>.util.logging.Logger;
 import <%= appPackage %>.util.mortar.BaseViewPresenter;
 
 class SplashPresenter extends BaseViewPresenter<SplashView> {
-
-	private static final Logger LOG = Logger.getLogger(SplashPresenter.class);
 
 	private final Flow flow;
 	private final ActionBarOwner actionBarOwner;
@@ -25,12 +24,12 @@ class SplashPresenter extends BaseViewPresenter<SplashView> {
 	}
 
 	public void login() {
-		LOG.info("Navigating to login screen");
+		Timber.i("Navigating to login screen");
 		flow.goTo(new LoginScreen());
 	}
 
 	public void register() {
-		LOG.info("Navigating to register screen");
+		Timber.i("Navigating to register screen");
 		flow.goTo(new RegisterScreen());
 	}
 
