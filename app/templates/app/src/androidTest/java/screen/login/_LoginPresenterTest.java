@@ -13,15 +13,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
-import <%= appPackage %>.actionbar.ActionBarConfig;
-import <%= appPackage %>.actionbar.ActionBarOwner;
+import <%= appPackage %>.toolbar.ToolbarConfig;
+import <%= appPackage %>.toolbar.ToolbarOwner;
 
 @RunWith(RobolectricTestRunner.class)
 public class LoginPresenterTest {
 
-	@Mock ActionBarOwner actionBarOwner;
+	@Mock
+	ToolbarOwner toolbarOwner;
 
-	@Captor ArgumentCaptor<ActionBarConfig> actionBarConfigCaptor;
+	@Captor ArgumentCaptor<ToolbarConfig> actionBarConfigCaptor;
 
 	@Before
 	public void before() throws Exception {
@@ -29,15 +30,15 @@ public class LoginPresenterTest {
 
 		LoginView view = mockView(LoginView.class);
 
-		LoginPresenter presenter = new LoginPresenter(actionBarOwner);
+		LoginPresenter presenter = new LoginPresenter(toolbarOwner);
 		presenter.takeView(view);
 	}
 
 	@Test
 	public void shouldConfigureActionBarOnLoad() throws Exception {
-		verify(actionBarOwner).setConfig(actionBarConfigCaptor.capture());
+		verify(toolbarOwner).setConfig(actionBarConfigCaptor.capture());
 
-		ActionBarConfig config = actionBarConfigCaptor.getValue();
+		ToolbarConfig config = actionBarConfigCaptor.getValue();
 		assertThat(config.getTitle()).isEqualTo("Login");
 		assertThat(config.isVisible()).isTrue();
 	}

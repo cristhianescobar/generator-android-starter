@@ -1,14 +1,12 @@
 package <%= appPackage %>.screen.register;
 
-import static <%= appPackage %>.test.util.FlowTestHelper.createFlow;
-import static <%= appPackage %>.test.util.ViewTestHelper.mockView;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-
-import java.lang.reflect.Field;
-
-import javax.validation.Validation;
-import javax.validation.Validator;
+import <%= appPackage %>.model.UserWithPassword;
+import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
+import <%= appPackage %>.service.ApiService;
+import <%= appPackage %>.service.StubApiService;
+import <%= appPackage %>.test.util.FlowTestHelper.MockFlowDispatcher;
+import <%= appPackage %>.toolbar.ToolbarConfig;
+import <%= appPackage %>.toolbar.ToolbarOwner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,49 +18,52 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.robolectric.RobolectricTestRunner;
 
-import <%= appPackage %>.actionbar.ActionBarConfig;
-import <%= appPackage %>.actionbar.ActionBarOwner;
-import <%= appPackage %>.model.UserWithPassword;
-import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
-import <%= appPackage %>.service.ApiService;
-import <%= appPackage %>.service.StubApiService;
-import <%= appPackage %>.test.util.FlowTestHelper.MockFlowListener;
+import java.lang.reflect.Field;
 
-import flow.Flow;
+import javax.validation.Validation;
+import javax.validation.Validator;
+
+import flow.FlowDelegate;
+
+import static <%= appPackage %>.test.util.FlowTestHelper.createFlow;
+import static <%= appPackage %>.test.util.ViewTestHelper.mockView;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 public class RegisterPresenterTest {
 	@Mock RegisterScreen screen;
-	@Mock ActionBarOwner actionBarOwner;
+	@Mock
+	ToolbarOwner toolbarOwner;
 	@Mock JsonSharedPreferencesRepository prefsRepository;
 
 	@Spy ApiService apiService = new StubApiService();
 	@Spy Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-	@Captor ArgumentCaptor<ActionBarConfig> actionBarConfigCaptor;
+	@Captor ArgumentCaptor<ToolbarConfig> actionBarConfigCaptor;
 	@Captor ArgumentCaptor<UserWithPassword> userWithPasswordArgumentCaptor;
 
-	private MockFlowListener flowListener;
+	private MockFlowDispatcher flowListener;
 	private RegisterPresenter presenter;
 
 	@Before
 	public void before() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		flowListener = new MockFlowListener();
-		Flow flow = createFlow(screen, flowListener);
+		flowListener = new MockFlowDispatcher();
+		FlowDelegate flow = createFlow(screen, flowListener);
 
 		RegisterView view = mockView(RegisterView.class);
 
-		presenter = new RegisterPresenter(flow, actionBarOwner, validator, apiService, prefsRepository);
+		presenter = new RegisterPresenter(toolbarOwner, validator, apiService, prefsRepository);
 		presenter.takeView(view);
 	}
 
 	@Test
 	public void shouldConfigureActionBarOnLoad() throws Exception {
-		verify(actionBarOwner).setConfig(actionBarConfigCaptor.capture());
+		verify(toolbarOwner).setConfig(actionBarConfigCaptor.capture());
 
-		ActionBarConfig config = actionBarConfigCaptor.getValue();
+		ToolbarConfig config = actionBarConfigCaptor.getValue();
 		assertThat(config.getTitle()).isEqualTo("Register");
 		assertThat(config.isVisible()).isTrue();
 	}

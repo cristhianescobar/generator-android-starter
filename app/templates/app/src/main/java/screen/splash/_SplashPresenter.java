@@ -1,52 +1,50 @@
 package <%= appPackage %>.screen.splash;
 
+import android.os.Bundle;
+
+import <%= appPackage %>.screen.login.LoginScreen;
+import <%= appPackage %>.screen.register.RegisterScreen;
+import <%= appPackage %>.toolbar.ToolbarConfig;
+import <%= appPackage %>.toolbar.ToolbarOwner;
+import <%= appPackage %>.util.mortar.BaseViewPresenter;
+
 import javax.inject.Inject;
 
-import android.os.Bundle;
 import flow.Flow;
 import timber.log.Timber;
 
-import <%= appPackage %>.actionbar.ActionBarConfig;
-import <%= appPackage %>.actionbar.ActionBarOwner;
-import <%= appPackage %>.screen.login.LoginScreen;
-import <%= appPackage %>.screen.register.RegisterScreen;
-import <%= appPackage %>.util.mortar.BaseViewPresenter;
-
 class SplashPresenter extends BaseViewPresenter<SplashView> {
+    private final ToolbarOwner toolbarOwner;
 
-	private final Flow flow;
-	private final ActionBarOwner actionBarOwner;
+    @Inject
+    SplashPresenter(ToolbarOwner toolbarOwner) {
+        this.toolbarOwner = toolbarOwner;
+    }
 
-	@Inject
-	SplashPresenter(Flow flow, ActionBarOwner actionBarOwner) {
-		this.flow = flow;
-		this.actionBarOwner = actionBarOwner;
-	}
+    public void login() {
+        Timber.i("Navigating to login screen");
+        Flow.get(getView()).set(new LoginScreen());
+    }
 
-	public void login() {
-		Timber.i("Navigating to login screen");
-		flow.goTo(new LoginScreen());
-	}
+    public void register() {
+        Timber.i("Navigating to register screen");
+        Flow.get(getView()).set(new RegisterScreen());
+    }
 
-	public void register() {
-		Timber.i("Navigating to register screen");
-		flow.goTo(new RegisterScreen());
-	}
+    @Override
+    protected void onLoad(Bundle savedInstanceState) {
+        super.onLoad(savedInstanceState);
 
-	@Override
-	protected void onLoad(Bundle savedInstanceState) {
-		super.onLoad(savedInstanceState);
+        SplashView view = getView();
+        if (view != null) {
+            hideActionBar();
+        }
+    }
 
-		SplashView view = getView();
-		if (view != null) {
-			hideActionBar();
-		}
-	}
-
-	private void hideActionBar() {
-		ActionBarConfig config = new ActionBarConfig.Builder()
-				.visible(false)
-				.build();
-		actionBarOwner.setConfig(config);
-	}
+    private void hideActionBar() {
+        ToolbarConfig config = new ToolbarConfig.Builder()
+                .visible(false)
+                .build();
+        toolbarOwner.setConfig(config);
+    }
 }

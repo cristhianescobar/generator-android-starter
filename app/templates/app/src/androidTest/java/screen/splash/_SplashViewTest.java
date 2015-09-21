@@ -1,23 +1,26 @@
 package <%= appPackage %>.screen.splash;
 
-import static org.mockito.Mockito.*;
-import static <%= appPackage %>.test.util.ViewTestHelper.createView;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import <%= appPackage %>.R;
+import <%= appPackage %>.TestApplicationModule;
+import <%= appPackage %>.util.dagger.ObjectGraphService;
+import <%= appPackage %>.util.flow.Layout;
+import <%= appPackage %>.util.mortarscreen.WithModule;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import <%= appPackage %>.R;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.Provides;
-import flow.Layout;
-import mortar.Blueprint;
-import mortar.Mortar;
-import <%= appPackage %>.TestApplicationModule;
+import flow.path.Path;
+
+import static <%= appPackage %>.test.util.ViewTestHelper.createView;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 public class SplashViewTest {
@@ -29,7 +32,7 @@ public class SplashViewTest {
 	@Before
 	public void before() throws Exception {
 		view = createView(SplashView.class).forScreen(new MockSplashScreen());
-		Mortar.inject(view.getContext(), this);
+        ObjectGraphService.inject(view.getContext(), this);
 	}
 
 	@Test
@@ -46,23 +49,15 @@ public class SplashViewTest {
 		verify(presenter).register();
 	}
 
+	@WithModule(MockSplashScreen.MockSplashModule.class)
 	@Layout(R.layout.view_splash)
-	static class MockSplashScreen implements Blueprint {
-		@Override
-		public String getMortarScopeName() {
-			return getClass().getName();
-		}
-
-		@Override
-		public Object getDaggerModule() {
-			return new Module();
-		}
+	static class MockSplashScreen extends Path {
 
 		@dagger.Module(
 				injects = { SplashView.class, SplashViewTest.class },
 				addsTo = TestApplicationModule.class
 		)
-		class Module {
+		class MockSplashModule {
 			@Provides
 			@Singleton
 			SplashPresenter provideMockPresenter() {

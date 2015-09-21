@@ -1,44 +1,48 @@
 package <%= appPackage %>.screen.splash;
 
-import javax.inject.Inject;
-
-import <%= appPackage %>.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
+
+import <%= appPackage %>.R;
+import <%= appPackage %>.analytics.EventTracker;
+import <%= appPackage %>.util.widget.BaseRelativeLayout;
+
+import javax.inject.Inject;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
-import mortar.Presenter;
-import <%= appPackage %>.analytics.EventTracker;
-import <%= appPackage %>.util.mortar.BaseView;
 
-public class SplashView extends BaseView {
+public class SplashView extends BaseRelativeLayout<SplashPresenter> {
 
-	@Inject SplashPresenter presenter;
-	@Inject EventTracker eventTracker;
+    @Inject
+    SplashPresenter presenter;
+    @Inject
+    EventTracker eventTracker;
 
-	@InjectView(R.id.login_button) Button loginButton;
-	@InjectView(R.id.register_button) Button registerButton;
+    @InjectView(R.id.login_button)
+    Button loginButton;
+    @InjectView(R.id.register_button)
+    Button registerButton;
 
-	public SplashView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    public SplashView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	@OnClick(R.id.login_button)
-	public void onLoginButtonClicked() {
-		eventTracker.track("Login button clicked");
-		presenter.login();
-	}
+    @OnClick(R.id.login_button)
+    public void onLoginButtonClicked() {
+        eventTracker.track("Login button clicked");
+        presenter.login();
+    }
 
-	@OnClick(R.id.register_button)
-	public void onRegisterButtonClicked() {
-		eventTracker.track("Register button clicked");
-		presenter.register();
-	}
+    @OnClick(R.id.register_button)
+    public void onRegisterButtonClicked() {
+        eventTracker.track("Register button clicked");
+        presenter.register();
+    }
 
-	@Override
-	protected Presenter getPresenter() {
-		return presenter;
-	}
+    @Override
+    public SplashPresenter getPresenter() {
+        return presenter;
+    }
 }

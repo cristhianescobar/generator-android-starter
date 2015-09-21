@@ -1,33 +1,29 @@
 package <%= appPackage %>.screen.login;
 
+import <%= appPackage %>.ActivityModule;
 import <%= appPackage %>.R;
+import <%= appPackage %>.util.flow.BasePath;
+import <%= appPackage %>.util.flow.Layout;
+import <%= appPackage %>.util.mortarscreen.WithModule;
 
-import flow.HasParent;
-import flow.Layout;
-import mortar.Blueprint;
-import <%= appPackage %>.screen.main.MainScreen;
-import <%= appPackage %>.screen.splash.SplashScreen;
-
+@WithModule(LoginScreen.LoginModule.class)
 @Layout(R.layout.view_login)
-public class LoginScreen implements Blueprint, HasParent<SplashScreen> {
-	@Override
-	public String getMortarScopeName() {
-		return getClass().getName();
-	}
+public class LoginScreen extends BasePath {
 
-	@Override
-	public Object getDaggerModule() {
-		return new Module();
-	}
+    @Override
+    public Object getDaggerModule() {
+        return new LoginModule();
+    }
 
-	@Override
-	public SplashScreen getParent() {
-		return new SplashScreen();
-	}
+    @Override
+    public String getMortarScopeName() {
+        return getClass().getName();
+    }
 
-	@dagger.Module(
-			injects = LoginView.class,
-			addsTo = MainScreen.Module.class
-	)
-	class Module {}
+    @dagger.Module(
+            injects = LoginView.class,
+            addsTo = ActivityModule.class
+    )
+    public class LoginModule {
+    }
 }
