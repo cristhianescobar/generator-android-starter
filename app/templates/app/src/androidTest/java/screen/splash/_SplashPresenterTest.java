@@ -1,9 +1,10 @@
 package <%= appPackage %>.screen.splash;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static <%= appPackage %>.test.util.FlowTestHelper.createFlow;
-import static <%= appPackage %>.test.util.ViewTestHelper.mockView;
+import <%= appPackage %>.screen.login.LoginScreen;
+import <%= appPackage %>.screen.register.RegisterScreen;
+import <%= appPackage %>.test.util.FlowTestHelper.MockFlowDispatcher;
+import <%= appPackage %>.toolbar.ToolbarConfig;
+import <%= appPackage %>.toolbar.ToolbarOwner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,57 +16,61 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
 import flow.Flow;
-import <%= appPackage %>.actionbar.ActionBarConfig;
-import <%= appPackage %>.actionbar.ActionBarOwner;
-import <%= appPackage %>.screen.login.LoginScreen;
-import <%= appPackage %>.screen.register.RegisterScreen;
-import <%= appPackage %>.test.util.FlowTestHelper.MockFlowListener;
+import flow.FlowDelegate;
+
+import static <%= appPackage %>.test.util.FlowTestHelper.createFlow;
+import static <%= appPackage %>.test.util.ViewTestHelper.mockView;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 public class SplashPresenterTest {
 
-	@Mock SplashScreen screen;
-	@Mock ActionBarOwner actionBarOwner;
+    @Mock
+    SplashScreen screen;
+    @Mock
+    ToolbarOwner toolbarOwner;
 
-	@Captor ArgumentCaptor<ActionBarConfig> actionBarConfigCaptor;
+    @Captor
+    ArgumentCaptor<ToolbarConfig> actionBarConfigCaptor;
 
-	private SplashView view;
-	private SplashPresenter presenter;
-	private MockFlowListener flowListener;
+    private SplashView view;
+    private SplashPresenter presenter;
+    private MockFlowDispatcher flowListener;
 
-	@Before
-	public void before() throws Exception {
-		MockitoAnnotations.initMocks(this);
+    @Before
+    public void before() throws Exception {
+        MockitoAnnotations.initMocks(this);
 
-		view = mockView(SplashView.class);
-		flowListener = new MockFlowListener();
-		Flow flow = createFlow(screen, flowListener);
+        view = mockView(SplashView.class);
+        flowListener = new MockFlowDispatcher();
+        FlowDelegate flow = createFlow(screen, flowListener);
 
-		presenter = new SplashPresenter(flow, actionBarOwner);
-		presenter.takeView(view);
-	}
+        presenter = new SplashPresenter(toolbarOwner);
+        presenter.takeView(view);
+    }
 
-	@Test
-	public void shouldHideActionBarOnLoad() throws Exception {
-		verify(actionBarOwner).setConfig(actionBarConfigCaptor.capture());
+    @Test
+    public void shouldHideActionBarOnLoad() throws Exception {
+        verify(toolbarOwner).setConfig(actionBarConfigCaptor.capture());
 
-		ActionBarConfig actionBarConfig = actionBarConfigCaptor.getValue();
-		assertThat(actionBarConfig.isVisible()).isFalse();
-	}
+        ToolbarConfig toolbarConfig = actionBarConfigCaptor.getValue();
+        assertThat(toolbarConfig.isVisible()).isFalse();
+    }
 
-	@Test
-	public void shouldGoToLoginScreen() throws Exception {
-		presenter.login();
+    @Test
+    public void shouldGoToLoginScreen() throws Exception {
+        presenter.login();
 
-		assertThat(flowListener.lastDirection).isEqualTo(Flow.Direction.FORWARD);
-		assertThat(flowListener.lastScreen).isInstanceOf(LoginScreen.class);
-	}
+        assertThat(flowListener.lastDirection).isEqualTo(Flow.Direction.FORWARD);
+        assertThat(flowListener.lastScreen).isInstanceOf(LoginScreen.class);
+    }
 
-	@Test
-	public void shouldGoToRegisterScreen() throws Exception {
-		presenter.register();
+    @Test
+    public void shouldGoToRegisterScreen() throws Exception {
+        presenter.register();
 
-		assertThat(flowListener.lastDirection).isEqualTo(Flow.Direction.FORWARD);
-		assertThat(flowListener.lastScreen).isInstanceOf(RegisterScreen.class);
-	}
+        assertThat(flowListener.lastDirection).isEqualTo(Flow.Direction.FORWARD);
+        assertThat(flowListener.lastScreen).isInstanceOf(RegisterScreen.class);
+    }
 }

@@ -1,26 +1,29 @@
 package <%= appPackage %>.screen.splash;
 
+import <%= appPackage %>.ActivityModule;
 import <%= appPackage %>.R;
+import <%= appPackage %>.util.flow.BasePath;
+import <%= appPackage %>.util.flow.Layout;
+import <%= appPackage %>.util.mortarscreen.WithModule;
 
-import flow.Layout;
-import mortar.Blueprint;
-import <%= appPackage %>.screen.main.MainScreen;
-
+@WithModule(SplashScreen.SplashModule.class)
 @Layout(R.layout.view_splash)
-public class SplashScreen implements Blueprint {
-	@Override
-	public String getMortarScopeName() {
-		return getClass().getName();
-	}
+public class SplashScreen extends BasePath {
 
-	@Override
-	public Object getDaggerModule() {
-		return new Module();
-	}
+    @Override
+    public Object getDaggerModule() {
+        return new SplashModule();
+    }
 
-	@dagger.Module(
-			injects = SplashView.class,
-			addsTo = MainScreen.Module.class
-	)
-	class Module {}
+    @Override
+    public String getMortarScopeName() {
+        return getClass().getName();
+    }
+
+    @dagger.Module(
+            injects = SplashView.class,
+            addsTo = ActivityModule.class
+    )
+    public class SplashModule {
+    }
 }

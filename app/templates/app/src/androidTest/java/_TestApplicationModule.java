@@ -1,66 +1,64 @@
 package <%= appPackage %>;
 
-import static org.mockito.Mockito.mock;
+import android.view.inputmethod.InputMethodManager;
 
-import javax.inject.Singleton;
-
-import com.google.gson.Gson;
+import <%= appPackage %>.analytics.AnalyticsModule;
+import <%= appPackage %>.analytics.EventTracker;
+import <%= appPackage %>.android.AndroidModule;
+import <%= appPackage %>.environment.EnvironmentModule;
+import <%= appPackage %>.util.gson.GsonModule;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.squareup.otto.Bus;
 
-import android.content.SharedPreferences;
-import android.view.inputmethod.InputMethodManager;
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
-import flow.Parcer;
-import <%= appPackage %>.analytics.EventTracker;
-import <%= appPackage %>.util.gson.GsonParcer;
-import <%= appPackage %>.util.mortar.BaseView;
+
+import static org.mockito.Mockito.mock;
 
 @Module(
-		injects = BaseView.class,
-		library = true
+        injects = TestApplication.class,
+        includes = {
+                AndroidModule.class,
+                AnalyticsModule.class,
+                EnvironmentModule.class,
+                GsonModule.class
+        },
+        library = true
 )
 public class TestApplicationModule {
-	private android.app.Application application;
+    private android.app.Application application;
 
-	public TestApplicationModule(android.app.Application application) {
-		this.application = application;
-	}
+    public TestApplicationModule(android.app.Application application) {
+        this.application = application;
+    }
 
-	@Provides
-	@Singleton
-	android.app.Application provideApplication() {
-		return application;
-	}
+    @Provides
+    @Singleton
+    android.app.Application provideApplication() {
+        return application;
+    }
 
-	@Provides
-	SharedPreferences provideSharedPreferences() {
-		return mock(SharedPreferences.class);
-	}
 
-	@Provides
-	MixpanelAPI provideMixpanelApi() {
-		return mock(MixpanelAPI.class);
-	}
+    @Provides
+    MixpanelAPI provideMixpanelApi() {
+        return mock(MixpanelAPI.class);
+    }
 
-	@Provides
-	EventTracker provideEventTracker() {
-		return mock(EventTracker.class);
-	}
+    @Provides
+    EventTracker provideEventTracker() {
+        return mock(EventTracker.class);
+    }
 
-	@Provides
-	Parcer<Object> provideParcer() {
-		return new GsonParcer<>(new Gson());
-	}
 
-	@Provides
-	Bus provideBus() {
-		return new Bus();
-	}
+    @Provides
+    Bus provideBus() {
+        return new Bus();
+    }
 
-	@Provides
-	InputMethodManager provideInputMethodManager() {
-		return mock(InputMethodManager.class);
-	}
+    @Provides
+    InputMethodManager provideInputMethodManager() {
+        return mock(InputMethodManager.class);
+    }
 }

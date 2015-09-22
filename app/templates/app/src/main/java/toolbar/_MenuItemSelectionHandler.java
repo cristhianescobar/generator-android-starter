@@ -1,4 +1,4 @@
-package <%= appPackage %>.actionbar;
+package <%= appPackage %>.toolbar;
 
 /**
  * An action to execute when a menu item is selected.

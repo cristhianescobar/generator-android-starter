@@ -1,19 +1,20 @@
 package <%= appPackage %>.screen.login;
 
-import javax.inject.Inject;
-
 import android.os.Bundle;
-import <%= appPackage %>.actionbar.ActionBarConfig;
-import <%= appPackage %>.actionbar.ActionBarOwner;
+
+import <%= appPackage %>.toolbar.ToolbarConfig;
+import <%= appPackage %>.toolbar.ToolbarOwner;
 import <%= appPackage %>.util.mortar.BaseViewPresenter;
+
+import javax.inject.Inject;
 
 class LoginPresenter extends BaseViewPresenter<LoginView> {
 
-	private ActionBarOwner actionBarOwner;
+	private ToolbarOwner toolbarOwner;
 
 	@Inject
-	LoginPresenter(ActionBarOwner actionBarOwner) {
-		this.actionBarOwner = actionBarOwner;
+	LoginPresenter(ToolbarOwner toolbarOwner) {
+		this.toolbarOwner = toolbarOwner;
 	}
 
 	@Override
@@ -27,9 +28,9 @@ class LoginPresenter extends BaseViewPresenter<LoginView> {
 	}
 
 	private void configureActionBar() {
-		ActionBarConfig config = new ActionBarConfig.Builder()
+		ToolbarConfig config = new ToolbarConfig.Builder()
 				.title("Login")
 				.build();
-		actionBarOwner.setConfig(config);
+		toolbarOwner.setConfig(config);
 	}
 }
