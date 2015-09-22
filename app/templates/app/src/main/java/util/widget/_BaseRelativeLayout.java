@@ -23,7 +23,7 @@ public abstract class BaseRelativeLayout<T extends Presenter> extends RelativeLa
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @Override

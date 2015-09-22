@@ -39,7 +39,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import flow.Flow;
 import flow.FlowDelegate;
 import flow.History;
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
     @Inject
     JsonSharedPreferencesRepository jsonSharedPreferencesRepository;
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
 
 
@@ -325,7 +325,7 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
      */
     private void inflateViewContainerLayout() {
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     /**

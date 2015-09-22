@@ -23,7 +23,7 @@ public abstract class BaseFrameLayout<T extends Presenter> extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 
 public class RegisterView extends BaseRelativeLayout<RegisterPresenter> {
@@ -23,13 +23,13 @@ public class RegisterView extends BaseRelativeLayout<RegisterPresenter> {
     @Inject
     RegisterPresenter presenter;
 
-    @InjectView(R.id.name_field)
+    @Bind(R.id.name_field)
     EditText nameEditText;
-    @InjectView(R.id.email_field)
+    @Bind(R.id.email_field)
     EditText emailEditText;
-    @InjectView(R.id.password_field)
+    @Bind(R.id.password_field)
     EditText passwordEditText;
-    @InjectView(R.id.register_button)
+    @Bind(R.id.register_button)
     Button registerButton;
 
     AlertDialog alertDialog;

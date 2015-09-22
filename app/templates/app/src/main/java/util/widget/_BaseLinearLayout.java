@@ -23,7 +23,7 @@ public abstract class BaseLinearLayout<T extends Presenter> extends LinearLayout
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @Override
