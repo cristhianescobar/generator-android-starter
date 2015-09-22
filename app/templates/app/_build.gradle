@@ -14,7 +14,8 @@ repositories {
 /*
  * App compilation configuration
  */
-
+ 
+apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
