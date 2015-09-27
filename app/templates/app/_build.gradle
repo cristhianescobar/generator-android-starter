@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.robolectric:robolectric-gradle-plugin:0.14.+'
+        classpath 'com.stanfy.spoon:spoon-gradle-plugin:1.0.3'
     }
 }
 
@@ -14,17 +14,19 @@ repositories {
 /*
  * App compilation configuration
  */
- 
-apply plugin: 'android-sdk-manager'
+
 apply plugin: 'com.android.application'
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        minSdkVersion <%= androidMinSdkVersion %>
-        targetSdkVersion <%= androidTargetSdkVersion %>
+        minSdkVersion 14
+        targetSdkVersion 21
         multiDexEnabled true
+
+        testInstrumentationRunner "<%= appPackage %>.TestTestRunner"
     }
     productFlavors {
         env_test {
@@ -65,16 +67,6 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
-}
-
-/*
- * Unit testing configuration
- */
-
-apply plugin: 'robolectric'
-robolectric {
-    include '**/*Test.class'
-    exclude '**/espresso/**/*.class'
 }
 
 apply plugin: 'idea'
@@ -139,7 +131,7 @@ dependencies {
     compile 'com.squareup:otto:1.3.5'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
-    compile 'com.squareup.retrofit:retrofit:1.8.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.squareup.flow:flow:0.12'
@@ -149,41 +141,53 @@ dependencies {
     compile 'org.hibernate:hibernate-validator:4.3.2.Final'
     compile 'com.mixpanel.android:mixpanel-android:4.3.1@aar'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:0.23.0'
     compile 'com.cocosw:bottomsheet:0.6@aar'
-    compile 'org.hibernate:hibernate-validator:4.3.2.Final'
 
-    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+//    testCompile('junit:junit:4.12')
+//    testCompile('org.mockito:mockito-core:1.10.19')
+//    testCompile('com.android.support.test:runner:0.4')
+//    testCompile('com.android.support.test:rules:0.4')
+
     androidTestCompile('junit:junit:4.12') {
-        exclude module: 'hamcrest-core'
+        exclude module: 'javawriter'
     }
-    androidTestCompile('org.robolectric:robolectric:2.4') {
-        exclude module: 'classworlds'
-        exclude module: 'commons-logging'
-        exclude module: 'httpclient'
-        exclude module: 'maven-artifact'
-        exclude module: 'maven-artifact-manager'
-        exclude module: 'maven-error-diagnostics'
-        exclude module: 'maven-model'
-        exclude module: 'maven-project'
-        exclude module: 'maven-settings'
-        exclude module: 'plexus-container-default'
-        exclude module: 'plexus-interpolation'
-        exclude module: 'plexus-utils'
-        exclude module: 'wagon-file'
-        exclude module: 'wagon-http-lightweight'
-        exclude module: 'wagon-provider-api'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {
+        exclude module: 'javawriter'
     }
-    androidTestCompile('com.squareup.assertj:assertj-android:1.0.0') {
-        exclude module: 'support-annotations'
+//    // TODO https://code.google.com/p/android-test-kit/issues/detail?id=157
+//    //androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2'
+    androidTestCompile('com.android.support.test:runner:0.4') {
+        exclude module: 'javawriter'
     }
-    androidTestCompile('com.squareup.assertj:assertj-android-support-v4:1.0.0') {
-        exclude module: 'support-annotations'
+    androidTestCompile('com.android.support.test:rules:0.4') {
+        exclude module: 'javawriter'
     }
-    androidTestCompile('com.squareup.assertj:assertj-android-appcompat-v7:1.0.0') {
-        exclude module: 'support-annotations'
+
+    androidTestCompile('com.squareup.spoon:spoon-client:1.1.10') {
+        exclude module: 'javawriter'
     }
-    androidTestCompile 'nl.jqno.equalsverifier:equalsverifier:1.5'
+    androidTestCompile('com.squareup.retrofit:retrofit-mock:1.9.0')
+
+    androidTestCompile('org.mockito:mockito-core:1.10.19')
 }
+
+apply plugin: 'spoon'
+spoon {
+    debug = true
+    noAnimations = true
+
+    if (project.hasProperty('spoonClassName')) {
+        className = project.spoonClassName
+
+        if (project.hasProperty('spoonMethodName')) {
+            methodName = project.spoonMethodName
+        }
+    }
+
+    if (project.hasProperty('spoonTestSize')) {
+        testSize = project.spoonTestSize
+    }
+}
+
 

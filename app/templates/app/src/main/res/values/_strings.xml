@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="app_name"><%= appName %></string>
+  <string name="app_name">testtest</string>
   <string name="menu_item_switch_environment">Switch Environment</string>
   <string name="button_register_text">Join Now</string>
   <string name="register_instruction_text">Before we create your account we need some details</string>
@@ -9,5 +9,8 @@
   <string name="hint_email_address">Email Address</string>
   <string name="hint_password">Password</string>
   <string name="dialog_error_title">Uh oh!</string>
+  <string name="join">Join</string>
+  <string name="login">Login</string>
+  <string name="login_screen">Login Screen</string>
 
 </resources>
