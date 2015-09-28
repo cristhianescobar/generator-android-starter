@@ -22,8 +22,8 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 21
+        minSdkVersion <%= androidMinSdkVersion %>
+        targetSdkVersion <%= androidTargetSdkVersion %>
         multiDexEnabled true
 
         testInstrumentationRunner "<%= appPackage %>.TestTestRunner"
