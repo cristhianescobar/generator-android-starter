@@ -77,7 +77,6 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
     private HandlesBack containerAsHandlesBack;
     private FlowDelegate flowDelegate;
 
-    private MortarScope activityScope;
     private Map<Integer, MenuItemSelectionHandler> menuItemSelectionHandlers;
 
 
@@ -331,7 +330,7 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
     /**
      * Initalise the root activity Mortar scope
      */
-    private void initActivityScope(Bundle savedInstanceState) {
+    protected void initActivityScope(Bundle savedInstanceState) {
         MortarScope parentScope = MortarScope.getScope(getApplication());
         String scopeName = getLocalClassName() + "-task-" + getTaskId();
         activityScope = parentScope.findChild(scopeName);
@@ -344,6 +343,8 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
                     .build(scopeName);
         }
     }
+
+
 
     private int getToolbarHeight() {
         TypedArray styledAttributes = getTheme().obtainStyledAttributes(new int[]{android.R.attr.actionBarSize});

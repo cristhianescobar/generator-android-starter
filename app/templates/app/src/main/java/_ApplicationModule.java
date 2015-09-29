@@ -37,9 +37,10 @@ import retrofit.RestAdapter;
         library = true
 )
 public class ApplicationModule {
+    public static boolean instrumentationTest;
     private Application application;
 
-    ApplicationModule(Application application) {
+    public ApplicationModule(Application application) {
         this.application = application;
     }
 

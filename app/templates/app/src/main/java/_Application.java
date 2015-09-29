@@ -2,6 +2,7 @@ package <%= appPackage %>;
 
 import android.support.multidex.MultiDex;
 
+import <%= appPackage %>.environment.EnvironmentModule;
 import <%= appPackage %>.util.dagger.ObjectGraphService;
 import <%= appPackage %>.util.logging.CrashReportingTree;
 
@@ -35,7 +36,7 @@ public class Application extends android.app.Application {
             rootScope = MortarScope.buildRootScope()
                     .withService(
                             ObjectGraphService.SERVICE_NAME,
-                            ObjectGraph.create(new ApplicationModule(this)))
+                            ObjectGraph.create(EnvironmentModule.getModules(this)))
                     .build("Root");
         }
 

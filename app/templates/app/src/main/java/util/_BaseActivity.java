@@ -6,6 +6,8 @@ import <%= appPackage %>.util.lifecycle.LifecycleOwner;
 
 import javax.inject.Inject;
 
+import mortar.MortarScope;
+
 
 abstract public class BaseActivity extends LifecycleActivity implements ToolbarOwner.Activity {
 
@@ -15,8 +17,14 @@ abstract public class BaseActivity extends LifecycleActivity implements ToolbarO
     @Inject
     public ToolbarOwner toolbarOwner;
 
+    protected MortarScope activityScope;
+
     @Override
     public LifecycleOwner getLifecycleOwner() {
         return lifecycleOwner;
+    }
+
+    public MortarScope getMortarScope() {
+        return activityScope;
     }
 }

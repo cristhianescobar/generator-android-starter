@@ -113,6 +113,9 @@ module.exports = yeoman.generators.Base.extend({
       this.template('app/src/main/_AndroidManifest.xml', 'app/src/main/AndroidManifest.xml');
       this.templateDirectory('app/src/main/java', 'app/src/main/java/' + packageDir);
       this.templateDirectory('app/src/main/res', 'app/src/main/res');
+
+      this.mkdir('app/src/debug');
+      this.template('app/src/debug/_AndroidManifest.xml', 'app/src/debug/AndroidManifest.xml');
     }
   }
 });
