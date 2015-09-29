@@ -76,6 +76,12 @@ module.exports = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
+  configuring: {
+    saveSettings: function() {
+      this.config.set('appPackage', this.appPackage);
+    }
+  },
+
   writing: {
     projectfiles: function () {
       this.copy('gitignore', '.gitignore');
@@ -117,5 +123,6 @@ module.exports = yeoman.generators.Base.extend({
       this.mkdir('app/src/debug');
       this.template('app/src/debug/_AndroidManifest.xml', 'app/src/debug/AndroidManifest.xml');
     }
+
   }
 });

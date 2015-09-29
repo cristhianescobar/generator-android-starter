@@ -48,6 +48,19 @@ This will create a fully functioning Android app skeleton.
 
 Once you've generated the skeleton app simply import into Android Studio
 
+### Sub-Generators
+
+Additional features can be accessed using sub commands.
+
+```bash
+yo android-starter:add-screen
+```
+
+This will create a new Mortar & Flow screen for you, eliminating a lot of manual
+copy and paste.
+
+
+
 ## License
 
 MIT
