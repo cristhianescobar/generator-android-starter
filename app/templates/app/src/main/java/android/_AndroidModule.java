@@ -6,16 +6,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.inputmethod.InputMethodManager;
+
 import dagger.Module;
 import dagger.Provides;
 
 /**
  * Module providing Android framework dependencies
  */
-@Module(
-		library = true,
-		complete = false
-)
+
+@Module
 public class AndroidModule {
 
 	@Provides
@@ -29,7 +28,7 @@ public class AndroidModule {
 	}
 
 	@Provides
-	InputMethodManager provideInputMethodManager(Application application) {
+    InputMethodManager provideInputMethodManager(Application application) {
 		return (InputMethodManager) application.getSystemService(Context.INPUT_METHOD_SERVICE);
 	}
 

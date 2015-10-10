@@ -1,29 +1,40 @@
 package <%= appPackage %>.screen.login;
 
-import <%= appPackage %>.ActivityModule;
+import <%= appPackage %>.ApplicationComponent;
 import <%= appPackage %>.R;
-import <%= appPackage %>.util.flow.BasePath;
+import <%= appPackage %>.app.ActivityComponent;
+import <%= appPackage %>.util.dagger.DaggerScope;
 import <%= appPackage %>.util.flow.Layout;
-import <%= appPackage %>.util.mortarscreen.WithModule;
+import <%= appPackage %>.util.mortarscreen.ScreenComponentFactory;
 
-@WithModule(LoginScreen.LoginModule.class)
-@Layout(R.layout.view_login)
-public class LoginScreen extends BasePath {
+import flow.path.Path;
 
-    @Override
-    public Object getDaggerModule() {
-        return new LoginModule();
-    }
+@Layout(R.layout.screen_login)
+public class LoginScreen extends Path implements ScreenComponentFactory<ActivityComponent> {
 
     @Override
-    public String getMortarScopeName() {
-        return getClass().getName();
+    public Object createComponent(ActivityComponent parent) {
+        return DaggerLoginScreen_LoginComponent.builder()
+                .activityComponent(parent)
+                .loginModule(new LoginModule())
+                .build();
     }
 
-    @dagger.Module(
-            injects = LoginView.class,
-            addsTo = ActivityModule.class
-    )
+    @dagger.Component(dependencies = ActivityComponent.class, modules = LoginModule.class)
+    @DaggerScope(LoginComponent.class)
+    public interface LoginComponent extends ApplicationComponent {
+        void inject(LoginView view);
+        void inject(LoginPresenter presenter);
+    }
+
+
+    @dagger.Module
     public class LoginModule {
+//        @Provides
+//        @DaggerScope(LoginComponent.class)
+//        public LoginPresenter providesPresenter(ToolbarOwner toolbarOwner) {
+//            return new LoginPresenter(toolbarOwner);
+//        }
+
     }
 }

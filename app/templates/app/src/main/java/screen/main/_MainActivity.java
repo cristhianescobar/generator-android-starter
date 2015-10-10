@@ -15,9 +15,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.cocosw.bottomsheet.BottomSheet;
-import <%= appPackage %>.ActivityModule;
+import com.google.gson.Gson;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+import <%= appPackage %>.ApplicationComponent;
 import <%= appPackage %>.R;
 import <%= appPackage %>.SharedPreferencesKeys;
+import <%= appPackage %>.app.ActivityComponent;
+import <%= appPackage %>.app.ActivityModule;
+import <%= appPackage %>.app.BaseActivity;
+import <%= appPackage %>.app.DaggerActivityComponent;
 import <%= appPackage %>.model.User;
 import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
 import <%= appPackage %>.screen.home.HomeScreen;
@@ -26,20 +32,17 @@ import <%= appPackage %>.toolbar.MenuItemSelectionHandler;
 import <%= appPackage %>.toolbar.ToolbarConfig;
 import <%= appPackage %>.toolbar.ToolbarMenuItem;
 import <%= appPackage %>.toolbar.ToolbarOwner;
-import <%= appPackage %>.util.BaseActivity;
-import <%= appPackage %>.util.dagger.ObjectGraphService;
+import <%= appPackage %>.util.dagger.DaggerService;
 import <%= appPackage %>.util.flow.FlowHistoryDevHelper;
 import <%= appPackage %>.util.flow.GsonParceler;
 import <%= appPackage %>.util.flow.HandlesBack;
-import com.google.gson.Gson;
-import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import flow.Flow;
 import flow.FlowDelegate;
 import flow.History;
@@ -61,7 +64,6 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
     @Inject
     MixpanelAPI mixpanel;
 
-
     @Inject
     SharedPreferences sharedPreferences;
 
@@ -78,6 +80,7 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
     private FlowDelegate flowDelegate;
 
     private Map<Integer, MenuItemSelectionHandler> menuItemSelectionHandlers;
+    private ActivityComponent component;
 
 
     @Override
@@ -110,9 +113,9 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
 
         initActivityScope(savedInstanceState);
 
-        ObjectGraphService.inject(this, this);
+        DaggerService.<ActivityComponent>getDaggerComponent(this).inject(this);
 
-        getBundleServiceRunner(activityScope).onCreate(savedInstanceState);
+        getBundleServiceRunner(this).onCreate(savedInstanceState);
 
         inflateViewContainerLayout();
         configureToolbar();
@@ -159,13 +162,21 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
 
     @Override
     public Object getSystemService(String name) {
-        if (flowDelegate != null) {
-            Object flowService = flowDelegate.getSystemService(name);
-            if (flowService != null) return flowService;
+        // see: https://github.com/square/mortar/issues/155
+        if (getApplication() == null) {
+            return super.getSystemService(name);
         }
 
-        return activityScope != null && activityScope.hasService(name) ? activityScope.getService(name)
-                : super.getSystemService(name);
+        Object service = null;
+        if (flowDelegate != null) {
+            service = flowDelegate.getSystemService(name);
+        }
+
+        if (service == null && mortarScope != null && mortarScope.hasService(name)) {
+            service = mortarScope.getService(name);
+        }
+
+        return service != null ? service : super.getSystemService(name);
     }
 
     @Override
@@ -219,7 +230,7 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
                 .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Timber.d(MortarScopeDevHelper.scopeHierarchyToString(activityScope));
+                        Timber.d(MortarScopeDevHelper.scopeHierarchyToString(mortarScope));
                         return true;
                     }
                 });
@@ -236,14 +247,16 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
 
     @Override
     protected void onDestroy() {
-        // activityScope may be null in case isWrongInstance() returned true in onCreate()
-        if (isFinishing() && activityScope != null) {
+        // mortarScope may be null in case isWrongInstance() returned true in onCreate()
+        if (isFinishing()) {
             mixpanel.flush();
             toolbarOwner.dropView(this);
             toolbarOwner.setConfig(null);
 
-            activityScope.destroy();
-            activityScope = null;
+            MortarScope activityScope = MortarScope.findChild(getApplicationContext(), getClass().getName());
+            if (activityScope != null) {
+                activityScope.destroy();
+            }
         }
         super.onDestroy();
     }
@@ -331,19 +344,20 @@ public class MainActivity extends BaseActivity implements Flow.Dispatcher {
      * Initalise the root activity Mortar scope
      */
     protected void initActivityScope(Bundle savedInstanceState) {
-        MortarScope parentScope = MortarScope.getScope(getApplication());
-        String scopeName = getLocalClassName() + "-task-" + getTaskId();
-        activityScope = parentScope.findChild(scopeName);
-        if (activityScope == null) {
-            activityScope = parentScope.buildChild()
+        mortarScope = MortarScope.findChild(getApplicationContext(), getClass().getName());
+
+        if (mortarScope == null) {
+            component = DaggerActivityComponent.builder()
+                    .applicationComponent(DaggerService.<ApplicationComponent>getDaggerComponent(getApplicationContext()))
+                    .activityModule(new ActivityModule(this))
+                    .build();
+
+            mortarScope = MortarScope.buildChild(getApplicationContext())
                     .withService(BundleServiceRunner.SERVICE_NAME, new BundleServiceRunner())
-                    .withService(
-                            ObjectGraphService.SERVICE_NAME,
-                            ObjectGraphService.create(parentScope, new ActivityModule(this)))
-                    .build(scopeName);
+                    .withService(DaggerService.SERVICE_NAME, component)
+                    .build(getClass().getName());
         }
     }
-
 
 
     private int getToolbarHeight() {

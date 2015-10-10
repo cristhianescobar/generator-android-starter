@@ -6,6 +6,8 @@ import android.widget.Button;
 
 import <%= appPackage %>.R;
 import <%= appPackage %>.analytics.EventTracker;
+import <%= appPackage %>.screen.register.RegisterScreen;
+import <%= appPackage %>.util.dagger.DaggerService;
 import <%= appPackage %>.util.widget.BaseRelativeLayout;
 
 import javax.inject.Inject;
@@ -27,6 +29,8 @@ public class SplashView extends BaseRelativeLayout<SplashPresenter> {
 
     public SplashView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        if (isInEditMode()) return;
+        DaggerService.<SplashScreen.SplashComponent>getDaggerComponent(context).inject(this);
     }
 
     @OnClick(R.id.login_button)

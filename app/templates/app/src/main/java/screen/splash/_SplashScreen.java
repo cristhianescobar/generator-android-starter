@@ -1,29 +1,38 @@
 package <%= appPackage %>.screen.splash;
 
-import <%= appPackage %>.ActivityModule;
+import <%= appPackage %>.ApplicationComponent;
 import <%= appPackage %>.R;
-import <%= appPackage %>.util.flow.BasePath;
+import <%= appPackage %>.app.ActivityComponent;
+import <%= appPackage %>.util.dagger.DaggerScope;
 import <%= appPackage %>.util.flow.Layout;
-import <%= appPackage %>.util.mortarscreen.WithModule;
+import <%= appPackage %>.util.mortarscreen.ScreenComponentFactory;
 
-@WithModule(SplashScreen.SplashModule.class)
-@Layout(R.layout.view_splash)
-public class SplashScreen extends BasePath {
+import flow.path.Path;
 
+@Layout(R.layout.screen_splash)
+public class SplashScreen extends Path implements ScreenComponentFactory<ActivityComponent> {
     @Override
-    public Object getDaggerModule() {
-        return new SplashModule();
+    public Object createComponent(ActivityComponent parent) {
+        return DaggerSplashScreen_SplashComponent.builder()
+                .activityComponent(parent)
+                .splashModule(new SplashModule())
+                .build();
     }
 
-    @Override
-    public String getMortarScopeName() {
-        return getClass().getName();
+    @dagger.Component(dependencies = ActivityComponent.class, modules = SplashModule.class)
+    @DaggerScope(SplashComponent.class)
+    public interface SplashComponent extends ApplicationComponent {
+        void inject(SplashView view);
+        void inject(SplashPresenter presenter);
     }
 
-    @dagger.Module(
-            injects = SplashView.class,
-            addsTo = ActivityModule.class
-    )
-    public class SplashModule {
+
+    @dagger.Module
+    class SplashModule {
+//        @Provides
+//        @DaggerScope(SplashComponent.class)
+//        public SplashPresenter providesPresenter(ToolbarOwner toolbarOwner) {
+//            return new SplashPresenter(toolbarOwner);
+//        }
     }
 }
