@@ -1,6 +1,6 @@
 {
   "name": "generator-android-starter",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Yeoman android starter essentials",
   "license": "MIT",
   "main": "app/index.js",
