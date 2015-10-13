@@ -1,29 +1,25 @@
 package <%= appPackage %>.analytics;
 
-import javax.inject.Singleton;
+import com.atomicleopard.expressive.Expressive;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+import <%= appPackage %>.environment.Environment;
 
 import org.json.JSONObject;
 
-import com.atomicleopard.expressive.Expressive;
-import com.mixpanel.android.mpmetrics.MixpanelAPI;
+import javax.inject.Singleton;
 
-import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
-import <%= appPackage %>.environment.Environment;
 
 /**
  * Module providing analytics dependencies.
  */
-@Module(
-		library = true,
-		complete = false
-)
+@Module
 public class AnalyticsModule {
 
 	@Provides
 	@Singleton
-	public MixpanelAPI provideMixpanelApi(Application application, Environment environment) {
+	public MixpanelAPI provideMixpanelApi(android.app.Application application, Environment environment) {
 		MixpanelAPI mixpanel = MixpanelAPI.getInstance(application, environment.getMixpanelToken());
 		mixpanel.registerSuperProperties(new JSONObject(Expressive.map("channel", "Android Payments App")));
 		return mixpanel;

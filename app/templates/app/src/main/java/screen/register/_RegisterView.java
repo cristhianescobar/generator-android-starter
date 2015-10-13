@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import <%= appPackage %>.R;
 import <%= appPackage %>.model.UserWithPassword;
+import <%= appPackage %>.util.dagger.DaggerService;
 import <%= appPackage %>.util.widget.BaseRelativeLayout;
 
 import java.util.Set;
@@ -36,6 +37,8 @@ public class RegisterView extends BaseRelativeLayout<RegisterPresenter> {
 
     public RegisterView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        if (isInEditMode()) return;
+        DaggerService.<RegisterScreen.RegisterComponent>getDaggerComponent(context).inject(this);
     }
 
     @OnClick(R.id.register_button)

@@ -1,29 +1,41 @@
 package <%= appPackage %>.screen.register;
 
-import <%= appPackage %>.ActivityModule;
+import <%= appPackage %>.ApplicationComponent;
 import <%= appPackage %>.R;
-import <%= appPackage %>.util.flow.BasePath;
+import <%= appPackage %>.app.ActivityComponent;
+import <%= appPackage %>.util.dagger.DaggerScope;
 import <%= appPackage %>.util.flow.Layout;
-import <%= appPackage %>.util.mortarscreen.WithModule;
+import <%= appPackage %>.util.mortarscreen.ScreenComponentFactory;
 
-@WithModule(RegisterScreen.RegisterModule.class)
-@Layout(R.layout.view_register)
-public class RegisterScreen extends BasePath {
+import flow.path.Path;
 
-    @Override
-    public Object getDaggerModule() {
-        return new RegisterModule();
-    }
+
+@Layout(R.layout.screen_register)
+public class RegisterScreen extends Path implements ScreenComponentFactory<ActivityComponent> {
+    private RegisterComponent component;
 
     @Override
-    public String getMortarScopeName() {
-        return getClass().getName();
+    public Object createComponent(ActivityComponent parent) {
+        return DaggerRegisterScreen_RegisterComponent.builder()
+                .activityComponent(parent)
+                .registerModule(new RegisterModule())
+                .build();
     }
 
-    @dagger.Module(
-            injects = RegisterView.class,
-            addsTo = ActivityModule.class
-    )
-    public class RegisterModule {
+    @dagger.Component(dependencies = ActivityComponent.class, modules = RegisterModule.class)
+    @DaggerScope(RegisterComponent.class)
+    public interface RegisterComponent extends ApplicationComponent {
+        void inject(RegisterView view);
+        void inject(RegisterPresenter presenter);
+    }
+
+
+    @dagger.Module
+    class RegisterModule {
+//        @Provides
+//        @DaggerScope(RegisterComponent.class)
+//        public RegisterPresenter providesPresenter(ToolbarOwner toolbarOwner, Validator validator, ApiService apiService, JsonSharedPreferencesRepository prefsRepository, InputMethodManager inputMethodManager) {
+//            return new RegisterPresenter(toolbarOwner, validator, apiService, prefsRepository, inputMethodManager);
+//        }
     }
 }

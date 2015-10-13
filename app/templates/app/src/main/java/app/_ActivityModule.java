@@ -1,16 +1,12 @@
-package <%= appPackage %>;
+package <%= appPackage %>.app;
 
 import <%= appPackage %>.toolbar.ToolbarOwner;
-import <%= appPackage %>.util.BaseActivity;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module(
-        addsTo = ApplicationModule.class,
-        library = true)
+@Module
 public class ActivityModule {
-
     private final BaseActivity activity;
 
     public ActivityModule(BaseActivity activity) {

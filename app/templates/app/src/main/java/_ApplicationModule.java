@@ -1,19 +1,15 @@
 package <%= appPackage %>;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
-import <%= appPackage %>.analytics.AnalyticsModule;
-import <%= appPackage %>.android.AndroidModule;
-import <%= appPackage %>.environment.Environment;
-import <%= appPackage %>.environment.EnvironmentModule;
-import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
-import <%= appPackage %>.screen.main.MainActivity;
-import <%= appPackage %>.service.ApiService;
-import <%= appPackage %>.service.StubApiService;
-import <%= appPackage %>.util.gson.GsonModule;
-import <%= appPackage %>.util.lifecycle.LifecycleOwner;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
+import <%= appPackage %>.environment.Environment;
+import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
+import <%= appPackage %>.service.ApiService;
+import <%= appPackage %>.service.StubApiService;
+import <%= appPackage %>.util.lifecycle.LifecycleOwner;
 
 import javax.inject.Singleton;
 import javax.validation.Validation;
@@ -24,23 +20,11 @@ import dagger.Provides;
 import flow.Flow;
 import retrofit.RestAdapter;
 
-@Module(
-        includes = {
-                AndroidModule.class,
-                AnalyticsModule.class,
-                EnvironmentModule.class,
-                GsonModule.class
-        },
-        injects = {
-                MainActivity.class
-        },
-        library = true
-)
+@Module
 public class ApplicationModule {
-    public static boolean instrumentationTest;
-    private Application application;
+    private android.app.Application application;
 
-    public ApplicationModule(Application application) {
+    public ApplicationModule(android.app.Application application) {
         this.application = application;
     }
 
@@ -48,6 +32,12 @@ public class ApplicationModule {
     @Singleton
     android.app.Application provideApplication() {
         return application;
+    }
+
+    @Provides
+    @Singleton
+    Context provideContext() {
+        return application.getApplicationContext();
     }
 
     @Provides

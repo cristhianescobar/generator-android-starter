@@ -3,6 +3,10 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var path = require('path');
 
+function upperCaseFirst( str ) {
+    return str.substr(0, 1).toUpperCase() + str.substr(1);
+}
+
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
     this.pkg = require('../package.json');
@@ -20,7 +24,7 @@ module.exports = yeoman.generators.Base.extend({
     }];
 
     this.prompt(prompts, function (props) {
-      this.screenName = props.screenName;
+      this.screenName = upperCaseFirst(props.screenName);
       this.screenPackage = props.screenName.toLowerCase();
       done();
     }.bind(this));
@@ -36,7 +40,7 @@ module.exports = yeoman.generators.Base.extend({
       this.template('app/src/main/java/screen/newscreen/_Presenter.java', screenPath + '/' + this.screenName + 'Presenter.java');
       this.template('app/src/main/java/screen/newscreen/_Screen.java', screenPath + '/' + this.screenName + 'Screen.java');
       this.template('app/src/main/java/screen/newscreen/_View.java', screenPath + '/' + this.screenName + 'View.java');
-      this.template('app/src/main/res/layout/_view.xml', 'app/src/main/res/layout/view_' + this.screenPackage + '.xml');
+      this.template('app/src/main/res/layout/_screen.xml', 'app/src/main/res/layout/screen_' + this.screenPackage + '.xml');
 
       this.template('app/src/androidTest/java/screen/_ScreenTest.java', testScreenPath + '/' + this.screenName + 'ScreenTest.java');
 

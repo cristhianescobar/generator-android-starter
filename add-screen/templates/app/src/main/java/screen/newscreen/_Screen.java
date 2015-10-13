@@ -1,29 +1,40 @@
 package <%= appPackage %>.screen.<%= screenPackage %>;
 
-import <%= appPackage %>.ActivityModule;
+import <%= appPackage %>.ApplicationComponent;
 import <%= appPackage %>.R;
-import <%= appPackage %>.util.flow.BasePath;
+import <%= appPackage %>.app.ActivityComponent;
+import <%= appPackage %>.util.dagger.DaggerScope;
 import <%= appPackage %>.util.flow.Layout;
-import <%= appPackage %>.util.mortarscreen.WithModule;
+import <%= appPackage %>.util.mortarscreen.ScreenComponentFactory;
 
-@WithModule(<%= screenName %>Screen.<%= screenName %>Module.class)
-@Layout(R.layout.view_<%= screenPackage %>)
-public class <%= screenName %>Screen extends BasePath {
+import flow.path.Path;
 
-    @Override
-    public Object getDaggerModule() {
-        return new <%= screenName %>Module();
-    }
+@Layout(R.layout.screen_<%= screenPackage %>)
+public class <%= screenName %>Screen extends Path implements ScreenComponentFactory<ActivityComponent> {
+    private <%= screenName %>Component component;
 
     @Override
-    public String getMortarScopeName() {
-        return getClass().getName();
+    public Object createComponent(ActivityComponent parent) {
+        return Dagger<%= screenName %>Screen_<%= screenName %>Component.builder()
+                .activityComponent(parent)
+                .<%= screenPackage %>Module(new <%= screenName %>Module())
+                .build();
     }
 
-    @dagger.Module(
-            injects = <%= screenName %>View.class,
-            addsTo = ActivityModule.class
-    )
-    public class <%= screenName %>Module {
+    @dagger.Component(dependencies = ActivityComponent.class, modules = <%= screenName %>Module.class)
+    @DaggerScope(<%= screenName %>Component.class)
+    public interface <%= screenName %>Component extends ApplicationComponent {
+        void inject(<%= screenName %>View view);
+        void inject(<%= screenName %>Presenter presenter);
+    }
+
+
+    @dagger.Module
+    class <%= screenName %>Module {
+//        @Provides
+//        @DaggerScope(<%= screenName %>Component.class)
+//        public <%= screenName %>Presenter providesPresenter(ToolbarOwner toolbarOwner, Validator validator, ApiService apiService, JsonSharedPreferencesRepository prefsRepository, InputMethodManager inputMethodManager) {
+//            return new <%= screenName %>Presenter(toolbarOwner, validator, apiService, prefsRepository, inputMethodManager);
+//        }
     }
 }

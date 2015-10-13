@@ -1,7 +1,5 @@
 package <%= appPackage %>.environment;
 
-import <%= appPackage %>.Application;
-import <%= appPackage %>.ApplicationModule;
 import <%= appPackage %>.R;
 
 import java.util.Collections;
@@ -9,15 +7,13 @@ import java.util.Map;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 import timber.log.Timber;
 
 import static com.atomicleopard.expressive.Expressive.map;
 
-@dagger.Module(
-        library = true,
-        complete = false
-)
+@Module
 public class EnvironmentModule {
 
     private static final Environment PRODUCTION_ENVIRONMENT = new ProductionEnvironment();
@@ -38,14 +34,6 @@ public class EnvironmentModule {
     @Singleton
     public Map<Integer, Environment> provideEnvironments() {
         return Collections.unmodifiableMap(ENVIRONMENTS);
-    }
-
-    static public Object[] getModules(Application app) {
-        Timber.d("Using modules from " + EnvironmentModule.class.getCanonicalName());
-        return new Object[]{
-                new ApplicationModule(app),
-                new EnvironmentModule()
-        };
     }
 }
 

@@ -1,10 +1,13 @@
 package <%= appPackage %>.screen.home;
 
-import <%= appPackage %>.ActivityModule;
+import <%= appPackage %>.ApplicationComponent;
 import <%= appPackage %>.R;
-import <%= appPackage %>.util.flow.BasePath;
+import <%= appPackage %>.app.ActivityComponent;
+import <%= appPackage %>.util.dagger.DaggerScope;
 import <%= appPackage %>.util.flow.Layout;
-import <%= appPackage %>.util.mortarscreen.WithModule;
+import <%= appPackage %>.util.mortarscreen.ScreenComponentFactory;
+
+import flow.path.Path;
 
 /**
  * This screen might be where you send user's once they're logged in/registered
@@ -12,24 +15,30 @@ import <%= appPackage %>.util.mortarscreen.WithModule;
  * <p/>
  * The implementation is incomplete and left to your imagination.
  */
-@WithModule(HomeScreen.HomeModule.class)
-@Layout(R.layout.view_home)
-public class HomeScreen extends BasePath {
-
+@Layout(R.layout.screen_home)
+public class HomeScreen extends Path implements ScreenComponentFactory<ActivityComponent> {
     @Override
-    public Object getDaggerModule() {
-        return new HomeModule();
+    public Object createComponent(ActivityComponent parent) {
+        return DaggerHomeScreen_HomeComponent.builder()
+                .activityComponent(parent)
+                .homeModule(new HomeModule())
+                .build();
     }
 
-    @Override
-    public String getMortarScopeName() {
-        return getClass().getName();
+    @dagger.Component(dependencies = ActivityComponent.class, modules = HomeModule.class)
+    @DaggerScope(HomeComponent.class)
+    public interface HomeComponent extends ApplicationComponent {
+        void inject(HomeView view);
+        void inject(HomePresenter presenter);
     }
 
-    @dagger.Module(
-            injects = HomeView.class,
-            addsTo = ActivityModule.class
-    )
+
+    @dagger.Module
     class HomeModule {
+//        @Provides
+//        @DaggerScope(HomeComponent.class)
+//        public HomePresenter providesPresenter(ToolbarOwner toolbarOwner) {
+//            return new HomePresenter(toolbarOwner);
+//        }
     }
 }

@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.stanfy.spoon:spoon-gradle-plugin:1.0.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }
 
@@ -16,6 +17,7 @@ repositories {
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -120,6 +122,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.0.+'
     compile 'com.android.support:support-v4:23.0.+'
     compile 'com.android.support:support-annotations:23.0.+'
+    compile 'com.cocosw:bottomsheet:1.+@aar'
     compile 'joda-time:joda-time:2.4'
     compile 'org.joda:joda-money:0.9.1'
     compile 'org.joda:joda-convert:1.7'
@@ -132,8 +135,9 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    compile 'com.squareup.dagger:dagger-compiler:1.2.2'
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.google.dagger:dagger:2.0.1'
+    apt 'com.google.dagger:dagger-compiler:2.0.1'
     compile 'com.squareup.flow:flow:0.12'
     compile 'com.squareup.flow:flow-path:0.12'
     compile 'com.squareup.mortar:mortar:0.19'
@@ -142,7 +146,7 @@ dependencies {
     compile 'com.mixpanel.android:mixpanel-android:4.3.1@aar'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'    
+    compile 'io.reactivex:rxjava:1.0.14'
 
     androidTestCompile('junit:junit:4.12') {
         exclude module: 'javawriter'
@@ -184,5 +188,3 @@ spoon {
         testSize = project.spoonTestSize
     }
 }
-
-

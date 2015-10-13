@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import <%= appPackage %>.R;
 import <%= appPackage %>.analytics.EventTracker;
+import <%= appPackage %>.util.dagger.DaggerService;
 import <%= appPackage %>.util.widget.BaseRelativeLayout;
 
 import javax.inject.Inject;
@@ -22,6 +23,8 @@ public class <%= screenName %>View extends BaseRelativeLayout<<%= screenName %>P
 
     public <%= screenName %>View(Context context, AttributeSet attrs) {
         super(context, attrs);
+        if (isInEditMode()) return;
+        DaggerService.<<%= screenName %>Screen.<%= screenName %>Component>getDaggerComponent(context).inject(this);
     }
 
     @Override
