@@ -7,7 +7,7 @@ by [Square](http://square.github.io/) using a single Activity/multiple view styl
 
 ##### Included libraries
 
-* [Dagger - dependency injection](http://square.github.io/dagger/)
+* [Dagger 2 - dependency injection](http://square.github.io/dagger/)
 * [Mortar - composable, scoped modules](https://github.com/square/mortar)
 * [Flow - sane navigation](https://github.com/square/flow)
 * [Retrofit - type-safe REST client](https://github.com/square/retrofit)
