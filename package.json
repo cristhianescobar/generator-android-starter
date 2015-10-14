@@ -23,12 +23,15 @@
     "yeoman-generator",
     "android",
     "square",
-    "dagger",
+    "dagger 2",
     "flow",
     "mortar",
     "retrofit",
     "otto",
-    "rxandroid"
+    "rxandroid",
+    "espresso",
+    "timber",
+    "butterknife"
   ],
   "dependencies": {
     "yeoman-generator": "^0.18.0",
