@@ -12,7 +12,7 @@ import <%= appPackage %>.util.widget.BaseRelativeLayout;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class SplashView extends BaseRelativeLayout<SplashPresenter> {
@@ -22,9 +22,9 @@ public class SplashView extends BaseRelativeLayout<SplashPresenter> {
     @Inject
     EventTracker eventTracker;
 
-    @Bind(R.id.login_button)
+    @BindView(R.id.login_button)
     Button loginButton;
-    @Bind(R.id.register_button)
+    @BindView(R.id.register_button)
     Button registerButton;
 
     public SplashView(Context context, AttributeSet attrs) {

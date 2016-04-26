@@ -57,13 +57,13 @@ module.exports = yeoman.generators.Base.extend({
       name: 'targetSdk',
       message: 'What Android SDK will you be targeting?',
       store: true,
-      default: 21  // Android 5.0 (Lollipop)
+      default: 23  // Android 6.0 (Marshmallow)
     },
     {
       name: 'minSdk',
       message: 'What is the minimum Android SDK you wish to support?',
       store: true,
-      default: 14  // Android 4.0 (Ice Cream Sandwich)
+      default: 15  // Android 4.0 (Ice Cream Sandwich)
     }];
 
     this.prompt(prompts, function (props) {
@@ -85,7 +85,7 @@ module.exports = yeoman.generators.Base.extend({
   writing: {
     projectfiles: function () {
       this.copy('gitignore', '.gitignore');
-      this.copy('build.gradle', 'build.gradle');
+      this.copy('_build.gradle', 'build.gradle');
       this.copy('gradle.properties', 'gradle.properties');
       this.copy('gradlew', 'gradlew');
       this.copy('gradlew.bat', 'gradlew.bat');
