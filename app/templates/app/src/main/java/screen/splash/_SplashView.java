@@ -2,6 +2,7 @@ package <%= appPackage %>.screen.splash;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 
 import <%= appPackage %>.R;
@@ -43,6 +44,14 @@ public class SplashView extends BaseRelativeLayout<SplashPresenter> {
     public void onRegisterButtonClicked() {
         eventTracker.track("Register button clicked");
         presenter.register();
+    }
+
+    @Override
+    protected void onVisibilityChanged(View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        if (visibility == View.VISIBLE) {
+            presenter.hideActionBar();
+        }
     }
 
     @Override

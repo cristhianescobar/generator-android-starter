@@ -19,6 +19,7 @@ ext {
             dagger2            : "com.google.dagger:dagger:2.2",
             dagger2_compiler   : "com.google.dagger:dagger-compiler:2.2",
             timber             : "com.jakewharton.timber:timber:4.1.2",
+            gson               : "com.google.code.gson:gson:2.4",
             junit              : "junit:junit:4.12",
             espresso           : "com.android.support.test.espresso:espresso-core:2.2.2",
             espresso_contrib   : "com.android.support.test.espresso:espresso-contrib:2.2",
