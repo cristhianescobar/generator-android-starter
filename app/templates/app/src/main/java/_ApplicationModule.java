@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.GsonBuilder;
-import com.squareup.otto.Bus;
 import <%= appPackage %>.environment.Environment;
 import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
 import <%= appPackage %>.service.ApiService;
@@ -38,12 +37,6 @@ public class ApplicationModule {
     @Singleton
     Context provideContext() {
         return application.getApplicationContext();
-    }
-
-    @Provides
-    @Singleton
-    Bus providesBus() {
-        return new Bus(); // my name is Otto and I love to get blotto
     }
 
     @Provides

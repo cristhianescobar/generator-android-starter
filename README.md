@@ -11,7 +11,6 @@ by [Square](http://square.github.io/) using a single Activity/multiple view styl
 * [Mortar - composable, scoped modules](https://github.com/square/mortar)
 * [Flow - sane navigation](https://github.com/square/flow)
 * [Retrofit - type-safe REST client](https://github.com/square/retrofit)
-* [Otto - event bus](https://github.com/square/otto)
 * [RXAndroid - reactive extensions for Android](https://github.com/ReactiveX/RxAndroid)
 
 The project also generates with a set of extremely useful test helper classes and static methods along with

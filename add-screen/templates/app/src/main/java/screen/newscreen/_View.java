@@ -11,7 +11,7 @@ import <%= appPackage %>.util.widget.BaseRelativeLayout;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class <%= screenName %>View extends BaseRelativeLayout<<%= screenName %>Presenter> {

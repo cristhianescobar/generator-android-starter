@@ -7,11 +7,10 @@ _describe your app here..._
 The app is built atop a collection of awesome Android libraries by (Square)[http://square.github.io/]
 using a single Activity/multiple view style.
 
-* (Dagger - dependency injection)[http://square.github.io/dagger/]
+* (Dagger - dependency injection)[http://google.github.io/dagger]
 * (Mortar - composable, scoped modules)[https://github.com/square/mortar]
 * (Flow - sane navigation)[https://github.com/square/flow]
 * (Retrofit - type-safe REST client)[https://github.com/square/retrofit]
-* (Otto - event bus)[https://github.com/square/otto]
 
 A solid understanding of these is essential before getting started.
 

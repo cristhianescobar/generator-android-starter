@@ -41,7 +41,7 @@ class SplashPresenter extends BaseViewPresenter<SplashView> {
         }
     }
 
-    private void hideActionBar() {
+    void hideActionBar() {
         ToolbarConfig config = new ToolbarConfig.Builder()
                 .visible(false)
                 .build();
