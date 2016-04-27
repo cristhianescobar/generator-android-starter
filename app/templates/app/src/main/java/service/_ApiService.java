@@ -5,9 +5,9 @@ import <%= appPackage %>.model.User;
 import <%= appPackage %>.model.UserToken;
 import <%= appPackage %>.model.UserWithPassword;
 
-import retrofit.http.Body;
-import retrofit.http.Header;
-import retrofit.http.POST;
+import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 import rx.Observable;
 
 /**

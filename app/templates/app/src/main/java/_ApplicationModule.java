@@ -17,7 +17,11 @@ import javax.validation.Validator;
 import dagger.Module;
 import dagger.Provides;
 import flow.Flow;
-import retrofit.RestAdapter;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class ApplicationModule {
@@ -47,16 +51,26 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    ApiService provideApiService(Environment environment) {
-        if (environment.getName().equals("Local")) {
-            return new StubApiService();
-        } else {
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setEndpoint(environment.getApiHost() + environment.getApiBasePath())
+    ApiService provideApiService(Environment environment, OkHttpClient client) {
+         if (environment.getName().equals("Local")) {
+             return new StubApiService();
+         } else {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(environment.getApiHost() + environment.getApiBasePath())
+                    .client(client)
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            return restAdapter.create(ApiService.class);
-        }
+            return retrofit.create(ApiService.class);
+         }
+     }
+ 
+     @Provides
+     @Singleton
+     OkHttpClient provideOkHttpClient() {
+        return new OkHttpClient.Builder()
+                .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .build();
     }
 
     @Provides
