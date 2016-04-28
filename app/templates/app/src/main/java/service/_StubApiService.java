@@ -1,10 +1,14 @@
 package <%= appPackage %>.service;
 
-import static java.util.UUID.randomUUID;
-
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+
+import retrofit2.http.Body;
+import retrofit2.http.Header;
+import rx.Observable;
+ 
+import static java.util.UUID.randomUUID;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,9 +17,6 @@ import <%= appPackage %>.model.User;
 import <%= appPackage %>.model.UserToken;
 import <%= appPackage %>.model.UserWithPassword;
 
-import retrofit.http.Body;
-import retrofit.http.Header;
-import rx.Observable;
 
 /**
  * An offline version of the ApiService which can be used to facilitate local development

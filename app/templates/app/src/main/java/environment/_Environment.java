@@ -17,6 +17,6 @@ public abstract class Environment {
 	public abstract String getApiHost();
 
 	public String getApiBasePath() {
-		return "api/v1";
+		return "/api/v1/";
 	}
 }
