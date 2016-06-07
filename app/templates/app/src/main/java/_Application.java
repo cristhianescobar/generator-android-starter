@@ -10,11 +10,6 @@ import timber.log.Timber;
 
 public class Application extends android.app.Application {
 
-    @Override
-    public Object getSystemService(String name) {
-        return super.getSystemService(name);
-    }
-
     private ApplicationComponent component;
 
     @Override
