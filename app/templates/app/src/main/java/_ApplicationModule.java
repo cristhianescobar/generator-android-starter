@@ -8,7 +8,6 @@ import <%= appPackage %>.environment.Environment;
 import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
 import <%= appPackage %>.service.ApiService;
 import <%= appPackage %>.service.StubApiService;
-import <%= appPackage %>.util.lifecycle.LifecycleOwner;
 
 import javax.inject.Singleton;
 import javax.validation.Validation;
@@ -16,7 +15,6 @@ import javax.validation.Validator;
 
 import dagger.Module;
 import dagger.Provides;
-import flow.Flow;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -77,18 +75,5 @@ public class ApplicationModule {
     @Singleton
     Validator provideValidator() {
         return Validation.buildDefaultValidatorFactory().getValidator();
-    }
-
-    @Provides
-    @Singleton
-    public LifecycleOwner providesLifeCycleOwner() {
-        return new LifecycleOwner();
-    }
-
-
-    @Singleton
-    @Provides
-    public Flow providesFlow(android.app.Application application) {
-        return Flow.get(application);
     }
 }

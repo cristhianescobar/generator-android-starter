@@ -13,7 +13,6 @@ import <%= appPackage %>.environment.EnvironmentModule;
 import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
 import <%= appPackage %>.service.ApiService;
 import <%= appPackage %>.util.gson.GsonModule;
-import <%= appPackage %>.util.lifecycle.LifecycleOwner;
 
 import javax.inject.Singleton;
 import javax.validation.Validator;
@@ -52,5 +51,4 @@ public interface ApplicationComponent {
 
     InputMethodManager inputMethodManager();
 
-    LifecycleOwner lifecycleOwner();
 }
