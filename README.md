@@ -8,8 +8,6 @@ by [Square](http://square.github.io/) using a single Activity/multiple view styl
 ##### Included libraries
 
 * [Dagger 2 - dependency injection](http://google.github.io/dagger/)
-* [Mortar - composable, scoped modules](https://github.com/square/mortar)
-* [Flow - sane navigation](https://github.com/square/flow)
 * [Retrofit - type-safe REST client](https://github.com/square/retrofit)
 * [RXAndroid - reactive extensions for Android](https://github.com/ReactiveX/RxAndroid)
 
@@ -46,17 +44,6 @@ This will create a fully functioning Android app skeleton.
 ### Run it
 
 Once you've generated the skeleton app simply import into Android Studio
-
-### Sub-Generators
-
-Additional features can be accessed using sub commands.
-
-```bash
-yo android-starter:add-screen
-```
-
-This will create a new Mortar & Flow screen for you, eliminating a lot of manual
-copy and paste.
 
 
 
