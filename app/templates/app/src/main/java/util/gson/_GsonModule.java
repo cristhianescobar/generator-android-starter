@@ -2,7 +2,6 @@ package <%= appPackage %>.util.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import <%= appPackage %>.util.flow.GsonParceler;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
@@ -15,7 +14,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import flow.StateParceler;
 
 /**
  * Module providing dependencies for Google's GSON library.
@@ -38,11 +36,5 @@ public class GsonModule {
     @Singleton
     Gson provideGson(GsonBuilder gsonBuilder) {
         return gsonBuilder.create();
-    }
-
-    @Provides
-    @Singleton
-    StateParceler provideParcer(Gson gson) {
-        return new GsonParceler(gson);
     }
 }

@@ -1,22 +1,25 @@
 package <%= appPackage %>.app;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import <%= appPackage %>.toolbar.ToolbarOwner;
+import <%= appPackage %>.repository.JsonSharedPreferencesRepository;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
-import mortar.MortarScope;
+import javax.inject.Inject;
 
+public class BaseActivity extends AppCompatActivity  {
+    @Inject
+    MixpanelAPI mixpanel;
 
-abstract public class BaseActivity extends AppCompatActivity implements ToolbarOwner.Activity {
+    @Inject
+    JsonSharedPreferencesRepository jsonSharedPreferencesRepository;
+    @Inject
 
-    protected ToolbarOwner toolbarOwner;
-
-    protected MortarScope mortarScope;
-
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.toolbarOwner = new ToolbarOwner();
     }
 }

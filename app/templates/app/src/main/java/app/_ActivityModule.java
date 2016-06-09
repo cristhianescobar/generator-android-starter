@@ -1,7 +1,5 @@
 package <%= appPackage %>.app;
 
-import <%= appPackage %>.toolbar.ToolbarOwner;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -16,10 +14,5 @@ public class ActivityModule {
     @Provides
     public BaseActivity providesActivity() {
         return activity;
-    }
-
-    @Provides
-    public ToolbarOwner providesToolbarOwner(BaseActivity activity) {
-        return activity.toolbarOwner;
     }
 }

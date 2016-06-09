@@ -1,8 +1,7 @@
 package <%= appPackage %>.app;
 
 import <%= appPackage %>.ApplicationComponent;
-import <%= appPackage %>.screen.main.MainActivity;
-import <%= appPackage %>.toolbar.ToolbarOwner;
+import <%= appPackage %>.activities.MainActivity;
 
 import dagger.Component;
 
@@ -12,5 +11,4 @@ public interface ActivityComponent extends ApplicationComponent {
     void inject(BaseActivity activity);
     void inject(MainActivity activity);
 
-    ToolbarOwner toolbarOwner();
 }

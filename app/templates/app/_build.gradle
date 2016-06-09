@@ -20,8 +20,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -90,6 +90,7 @@ dependencies {
     compile(rootProject.ext.libs.recyclerview)
     compile(rootProject.ext.libs.support)
     compile(rootProject.ext.libs.support_annotations)
+    compile(rootProject.ext.libs.design)
     compile(rootProject.ext.libs.dagger2)
     apt(rootProject.ext.libs.dagger2_compiler)
     compile(rootProject.ext.libs.butterknife)
@@ -109,9 +110,6 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.3.2'
     compile 'commons-io:commons-io:2.4'
     provided 'javax.annotation:jsr250-api:1.0'
-    compile 'com.squareup.flow:flow:0.12'
-    compile 'com.squareup.flow:flow-path:0.12'
-    compile 'com.squareup.mortar:mortar:0.19'
     compile 'org.hibernate:hibernate-validator:4.3.2.Final'
     compile 'com.mixpanel.android:mixpanel-android:4.3.1@aar'
 

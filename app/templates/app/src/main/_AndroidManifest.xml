@@ -13,7 +13,7 @@
 			android:theme="@style/AppTheme">
 
 		<activity
-				android:name="<%= appPackage %>.screen.main.MainActivity"
+				android:name=".activities.MainActivity"
 				android:launchMode="singleTop">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
