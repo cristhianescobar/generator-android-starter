@@ -24,8 +24,6 @@
     "android",
     "square",
     "dagger 2",
-    "flow",
-    "mortar",
     "retrofit",
     "otto",
     "rxandroid",
