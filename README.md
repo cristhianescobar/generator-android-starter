@@ -1,4 +1,5 @@
 # generator-android-starter 
+<img align="right" height="260" src="https://dl.dropboxusercontent.com/u/83836922/as_icon.png">
 
 > [Yeoman](http://yeoman.io) generator
 
